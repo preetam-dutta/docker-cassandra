@@ -1,0 +1,25 @@
+#!/bin/bash
+
+node=$(hostname -i)
+cqlPort=9042
+
+usage() {
+  echo "Usage: $0 [-n <Cassandra node>] [-p <CQL port>]"
+  echo ""
+}
+
+while getopts "n:p:h" opt; do
+  case "${opt}" in
+    n)
+      node=${OPTARG}
+      ;;
+    p)
+      cqlPort=${OPTARG}
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
+
+/opt/cassandra/bin/cqlsh $node $cqlPort
