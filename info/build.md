@@ -1,14 +1,13 @@
 
-
-Docker Hub Notes
-================
+Build the image and upload to Docker Hub
+========================================
 
 Docker Build
 ------------
 Execute the below command to build Cassandra container
 - docker build -t cassandra:latest .
   ```bash
-  $ cd cloud-lab/docker/preet-cassandra
+  $ cd <project-path>
   $ docker build -t cassandra .
   Sending build context to Docker daemon  8.192kB
   ...
@@ -35,7 +34,7 @@ Login to Docker as prep for pushing the image
   ```bash
   $ docker login
   ...
-  Username: preetamdutta
+  Username: p*****
   Password:
   ...
   Login Succeeded
@@ -44,8 +43,8 @@ Login to Docker as prep for pushing the image
 
 Docker Tag & Push
 -----------------
-- docker tag cassandra:latest preetamdutta/cassandra:v1.0.0
-- docker push preetamdutta/cassandra:v1.0.0
+- docker tag cassandra:latest preetamdutta/cassandra:latest
+- docker push preetamdutta/cassandra:latest
 
 
 
