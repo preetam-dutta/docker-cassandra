@@ -5,7 +5,11 @@ Build the image and upload to Docker Hub
 Docker Build
 ------------
 Execute the below command to build Cassandra container
-- docker build -t cassandra:latest .
+- Command:
+  ```bash
+  docker build -t cassandra:latest .
+  ```
+- Example:
   ```bash
   $ cd <project-path>
   $ docker build -t cassandra .
@@ -17,8 +21,12 @@ Execute the below command to build Cassandra container
 
 Docker image listing
 --------------------
-Ensure that you able to see the recently built image 
-- docker image ls
+Ensure that you able to see the recently built image
+- Command:
+  ```bash
+  docker image ls
+  ``` 
+- Example:
   ```bash
   $ docker image ls
   REPOSITORY                                 TAG                 IMAGE ID            CREATED             SIZE
@@ -30,21 +38,34 @@ Ensure that you able to see the recently built image
 Docker Login
 ------------
 Login to Docker as prep for pushing the image
-- docker login
+- Command:
+  ```bash
+  docker login
+  ```
+- Example:
   ```bash
   $ docker login
   ...
-  Username: p*****
+  Username: pre***
   Password:
   ...
   Login Succeeded
   $
   ```
 
-Docker Tag & Push
------------------
-- docker tag cassandra:latest preetamdutta/cassandra:latest
-- docker push preetamdutta/cassandra:latest
+Tag the local build
+-------------------
+- Command:
+  ```bash
+  docker tag cassandra:latest preetamdutta/cassandra:latest
+  ```
+Push the build on Docker Hub
+----------------------------
+- Command:
+  ```bash
+  docker push preetamdutta/cassandra:latest
+  ```
+
 
 
 

@@ -17,17 +17,23 @@ You should have Docker installed, preferably Docker Desktop
 
 Pull the Docker Image
 =====================
-- docker pull preetamdutta/cassandra:latest
+Pull the docker image from DockerHub
+- Command:
+  ```bash
+  docker pull preetamdutta/cassandra:latest
+  ```
 
 Create Docker Volume
 ====================
 You need to create docker volumes to persist data across container restarts. Create two set of volumes per node, one for the data and another for the logs
 
-- docker volume create cassandra-node<sequence-number>-data
-- docker volume create cassandra-node<sequence-number>-logs
+- Command:
+  ```bash
+  docker volume create cassandra-node<sequence-number>-data
+  docker volume create cassandra-node<sequence-number>-logs
+  ```
 
-
-*Example showing volumes creation for 3 nodes cluster:*
+- Example showing volumes creation for 3 nodes cluster:
   ```bash
   docker volume create cassandra-node1-data
   docker volume create cassandra-node1-logs
@@ -42,7 +48,11 @@ You need to create docker volumes to persist data across container restarts. Cre
 Running the first node
 ======================
 The first node you bring up is going to be the seed node for the rest of the cluster. For the first node, execute the below command
-- docker run -i -v cassandra-node<sequence-number>-data:/var/lib/cassandra -v cassandra-node<sequence-number>-logs:/var/log/cassandra --env clusterName=<cluster-name> -t preetamdutta/cassandra:latest
+- Command:
+  ```bash
+  docker run -i -v cassandra-node<sequence-number>-data:/var/lib/cassandra -v cassandra-node<sequence-number>-logs:/var/log/cassandra --env clusterName=<cluster-name> -t preetamdutta/cassandra:latest
+  ```
+- Example:
   ```bash
   docker run -i \
       -v cassandra-node1-data:/var/lib/cassandra \
@@ -61,7 +71,12 @@ The first node you bring up is going to be the seed node for the rest of the clu
 
 Verifying the first node & take a note of the seed IP for subsequent nodes
 ============================================================================
-- docker container ls
+- Command: 
+  ```bash
+  docker container ls
+  ```
+  
+- Example:
   ```bash
   $ docker container ls
   CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                                         NAMES
@@ -69,7 +84,12 @@ Verifying the first node & take a note of the seed IP for subsequent nodes
   $
   ```
 - note the CONAINER_ID from previous command
-- docker exec -it <container id> nodetool status
+- Verify node status
+- Command:
+  ```bash
+  docker exec -it <container id> nodetool status
+  ```
+- Example:
   ```bash
   $ docker exec -it 94e1a467e3ac nodetool status
   Datacenter: dc1
@@ -94,7 +114,11 @@ Running the second and subsequent nodes
 For second node onwards execute below command, updating the volume details. And for the **seed** provide the IP of the first cluster.
 And ensure the cluster-name also remains the same as first node
 - For the below command keep changing the *<sequence-number>* to bring up more nodes as you may desire
-- docker run -v cassandra-node<sequence-number>-data:/var/lib/cassandra -v cassandra-node<sequence-number>-logs:/var/log/cassandra --env **seed=172.17.0.2** --env clusterName=preet-cluster -t preetamdutta/cassandra:latest
+- Command:
+  ```bash
+  docker run -v cassandra-node<sequence-number>-data:/var/lib/cassandra -v cassandra-node<sequence-number>-logs:/var/log/cassandra --env **seed=172.17.0.2** --env clusterName=preet-cluster -t preetamdutta/cassandra:latest
+  ```
+- Example:
   ```bash
   docker run \
       -v cassandra-node2-data:/var/lib/cassandra \
@@ -104,6 +128,7 @@ And ensure the cluster-name also remains the same as first node
       -t preetamdutta/cassandra:latest
   ```
 - Verify the subsequent nodes are coming up via nodetool command
+- Example:
   ```bash
   $ docker exec -it 5fed44c4d5ba nodetool status
   Datacenter: dc1
@@ -116,14 +141,20 @@ And ensure the cluster-name also remains the same as first node
   ```
 Starting CQLSH
 ==============
-- docker container ls
+- List running containers
+- Example:
   ```bash
   $ docker container ls
   CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                                         NAMES
   94e1a467e3ac        preet-cassandra:latest   "/bin/sh -c 'cassand…"   3 minutes ago       Up 3 minutes        7000-7001/tcp, 7199/tcp, 9042/tcp, 9160/tcp   hopeful_mendel
   $
 - note the CONAINER_ID from previous command
-- docker exec -it <container id> cqlsh
+- Start CQLSH
+- Command:
+  ```bash
+  docker exec -it <container id> cqlsh
+  ```
+- Example:
   ```bash
   preetam@IN-00207318:~$ docker exec -it 94e1a467e3ac cqlsh
   Connected to preet-cluster at 172.17.0.2:9042.
