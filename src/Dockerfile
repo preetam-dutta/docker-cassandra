@@ -4,9 +4,11 @@ FROM alpine:3.10.1
 RUN addgroup -g 550 kasndra && adduser -h /home/kasndra -G kasndra -S -u 550 kasndra
 
 # securing volume to persist Cassandra data 
-VOLUME ["/var/lib/cassandra", "/var/log/cassandra"]
-RUN chown kasndra:kasndra /var/lib/cassandra \
-  && chown kasndra:kasndra /var/log/cassandra
+
+RUN mkdir -p /var/lib/cassandra \
+  && mkdir -p /var/log/cassandra \
+  && chown -R kasndra:kasndra /var/lib/cassandra \
+  && chown -R kasndra:kasndra /var/log/cassandra
 
 # Supporting sw tools installation
 RUN apk add --no-cache openjdk8
@@ -39,6 +41,8 @@ RUN sed -e "s/^num_tokens:.*$/num_tokens: 8/" \
   -e "s/^# saved_caches_directory:.*$/saved_caches_directory: \/var\/lib\/cassandra\/saved_caches/" \
   -e "s/^endpoint_snitch:.*$/endpoint_snitch: GossipingPropertyFileSnitch/" < /opt/cassandra/conf/cassandra.yaml.orig > cassandra.yaml \
   && chown -R kasndra:kasndra /etc/cassandra
+
+VOLUME ["/var/lib/cassandra", "/var/log/cassandra"]
 
 # 7000 Intra-node communication
 # 7001 TLS intra-node communication
