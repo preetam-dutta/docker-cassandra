@@ -37,6 +37,7 @@ RUN sed -e "s/^num_tokens:.*$/num_tokens: 8/" \
 
 RUN mkdir -p /var/lib/cassandra /var/log/cassandra \
   && chown -R kasndra:kasndra /var/lib/cassandra /var/log/cassandra
+VOLUME ["/var/lib/cassandra", "/var/log/cassandra"]
 
 # 7000 Intra-node communication
 # 7001 TLS intra-node communication
