@@ -24,7 +24,10 @@ RUN chmod 755 cassandra.sh cqlsh nodetool
   
 # setting up Cassandra configurations
 WORKDIR /opt/cassandra/conf
-RUN mv cassandra.yaml cassandra.yaml.orig && ln -s /etc/cassandra/cassandra.yaml cassandra.yaml
+RUN mv cassandra.yaml cassandra.yaml.orig \
+  && ln -s /etc/cassandra/cassandra.yaml cassandra.yaml \
+  && mv cassandra-env.sh cassandra-env.sh.orig \
+  && ln -s /etc/cassandra/cassandra-env.sh cassandra-env.sh
 WORKDIR /etc/cassandra
 RUN sed -e "s/^num_tokens:.*$/num_tokens: 8/" \
   -e "s/^# hints_directory:.*$/hints_directory: \/var\/lib\/cassandra\/hints/" \
@@ -49,5 +52,7 @@ EXPOSE 7000 7001 7199 9042 9160
 USER kasndra:kasndra
 ENV seed="CURRENT_HOST"
 ENV clusterName="preet-cluster"
+ENV maxHeapSize="512"
+ENV heapNewSize="100"
 WORKDIR /home/kasndra
-ENTRYPOINT cassandra.sh -s ${seed} -c ${clusterName}
+ENTRYPOINT cassandra.sh -s ${seed} -c ${clusterName} -m ${maxHeapSize} -n ${heapNewSize}

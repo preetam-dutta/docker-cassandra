@@ -58,6 +58,8 @@ The first node you bring up is going to be the seed node for the rest of the clu
       -v cassandra-node1-data:/var/lib/cassandra \
       -v cassandra-node1-logs:/var/log/cassandra \
       --env clusterName=preet-cluster \
+      --env maxHeapSize=768 \
+      --env heapNewSize=100 \
       -t preetamdutta/cassandra:latest
       
   ```
