@@ -19,8 +19,8 @@ RUN tar -zxvf apache-cassandra-3.11.4-bin.tar.gz \
 
 # setting up Cassandra scripts
 WORKDIR /usr/local/bin/
-COPY cassandra.sh cqlsh nodetool /usr/local/bin/
-RUN chmod 755 cassandra.sh cqlsh nodetool
+COPY cassandra.sh cqlsh nodetool liveness.sh /usr/local/bin/
+RUN chmod 755 cassandra.sh cqlsh nodetool liveness.sh
   
 # setting up Cassandra configurations
 WORKDIR /opt/cassandra/conf
