@@ -35,6 +35,7 @@ RUN sed -e "s/^num_tokens:.*$/num_tokens: 8/" \
   -e "s/^#     - \/var\/lib\/cassandra\/data.*$/  - \/var\/lib\/cassandra\/data/" \
   -e "s/^# commitlog_directory:.*$/commitlog_directory: \/var\/lib\/cassandra\/commitlog/" \
   -e "s/^# saved_caches_directory:.*$/saved_caches_directory: \/var\/lib\/cassandra\/saved_caches/" \
+  -e "s/^enable_materialized_views:.*$/enable_materialized_views: false/" \
   -e "s/^endpoint_snitch:.*$/endpoint_snitch: GossipingPropertyFileSnitch/" < /opt/cassandra/conf/cassandra.yaml.orig > cassandra.yaml \
   && chown -R kasndra:kasndra /etc/cassandra
 
