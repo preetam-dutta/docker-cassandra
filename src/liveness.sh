@@ -1,5 +1,5 @@
 #!/bin/bash
 
-(( $(ps -ef | grep -i cassandra | grep -v grep | grep -v cassandra.sh | wc -l) != 1 )) && exit 1
+(( $(ps -ef | grep java | grep apache-cassandra | grep -v grep | wc -l) != 1 )) && exit 1
 
 exit 0
